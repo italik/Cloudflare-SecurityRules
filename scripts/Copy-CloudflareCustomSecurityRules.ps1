@@ -101,11 +101,16 @@ function Get-ZoneContext {
         }
     }
 
+    $resolvedRules = @()
+    if ($ruleset -and $ruleset.PSObject.Properties.Name -contains 'rules' -and $null -ne $ruleset.rules) {
+        $resolvedRules = @($ruleset.rules)
+    }
+
     return [pscustomobject]@{
         Domain    = $Domain
         ZoneId    = $zoneId
         RulesetId = $ruleset.id
-        Rules     = @($ruleset.rules)
+        Rules     = $resolvedRules
     }
 }
 

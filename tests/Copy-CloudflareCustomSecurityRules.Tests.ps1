@@ -41,6 +41,21 @@ Describe 'Zone and ruleset resolution' {
         $context.ZoneId | Should -Be 'zone1'
         $context.RulesetId | Should -Be 'rs1'
     }
+
+    It 'handles entrypoint responses that omit the rules property' {
+        . "$PSScriptRoot/../scripts/Copy-CloudflareCustomSecurityRules.ps1"
+
+        Mock Invoke-CfApi {
+            if ($Path -like '/zones?name=*') { return @(@{ id = 'zone1' }) }
+            if ($Path -like '/zones/zone1/rulesets/phases/http_request_firewall_custom/entrypoint') {
+                return @{ id = 'rs1' }
+            }
+        }
+
+        $context = Get-ZoneContext -Domain 'example.com' -ApiToken 'tok'
+        $context.RulesetId | Should -Be 'rs1'
+        (@($context.Rules)).Count | Should -Be 0
+    }
 }
 
 Describe 'Source validation' {
