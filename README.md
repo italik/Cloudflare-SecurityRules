@@ -16,8 +16,15 @@ Behavior:
 
 Use a Cloudflare API token with:
 - `Zone:Read`
-- `Zone Rulesets:Read`
-- `Zone Rulesets:Edit`
+- `Zone WAF:Edit`
+
+Create an API token from here: https://dash.cloudflare.com/profile/api-tokens
+Minimum permissions are:
+<img width="905" height="281" alt="image" src="https://github.com/user-attachments/assets/36078edf-fd87-443a-b21d-15eaf6b30848" />
+
+I would also recommend setting the specific zones that you want to include in the scope (prevents any accidents!):
+<img width="921" height="181" alt="image" src="https://github.com/user-attachments/assets/d1595874-b35f-4642-ada7-8c83f7b09bbe" />
+
 
 ## Usage
 
